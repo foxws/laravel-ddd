@@ -15,6 +15,8 @@ Layers are defined in `config('ddd.layers')`. Out of the box you get four:
 
 Publish the config file to add, rename, or remove layers, or point an existing one at `App\` to keep everything under `app/`.
 
+Two more layers, `Infrastructure` (repositories, storage, queues) and `Integrations` (third-party services), ship commented out in the config — uncomment them to opt in.
+
 ## Installing The Structure
 
 ```bash
