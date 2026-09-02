@@ -35,6 +35,10 @@ class DddServiceProvider extends ServiceProvider
             __DIR__.'/../config/ddd.php' => config_path('ddd.php'),
         ], ['ddd', 'ddd-config']);
 
+        $this->publishes([
+            __DIR__.'/../stubs' => base_path('stubs'),
+        ], ['ddd', 'ddd-stubs']);
+
         $this->commands([
             DddInstallCommand::class,
             DddMakeCommand::class,

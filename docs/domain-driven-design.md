@@ -52,6 +52,8 @@ php artisan ddd:install --no-dump-autoload # skip regenerating the autoloader
 }
 ```
 
+If you've uncommented the `Infrastructure` or `Integrations` layers in `config/ddd.php`, add them to `autoload.psr-4` the same way: `"Infrastructure\\": "src/Infrastructure/"` and `"Integrations\\": "src/Integrations/"`.
+
 Then create the layer directories and `src/Foundation/Helpers.php` from the package's `helpers.ddd.stub` (see [Customizing Stubs](#customizing-stubs) to change its default content), and run `composer dump-autoload` to pick up the new mappings.
 
 ## Generating Classes
@@ -95,7 +97,13 @@ trait         value_object  view_model
 
 ## Customizing Stubs
 
-Publish a stub to override it for the whole application:
+Publish the stubs to override them for the whole application:
+
+```bash
+php artisan vendor:publish --tag=ddd-stubs
+```
+
+This copies every `*.ddd.stub` file into `stubs/`; delete the ones you don't want to override. To publish a single stub instead:
 
 ```bash
 mkdir -p stubs && cp vendor/foxws/laravel-ddd/stubs/action.ddd.stub stubs/action.ddd.stub
