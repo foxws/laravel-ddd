@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+    public function created(object $model): void
+    {
+        //
+    }
+
+    public function updated(object $model): void
+    {
+        //
+    }
+
+    public function deleted(object $model): void
+    {
+        //
+    }
+}

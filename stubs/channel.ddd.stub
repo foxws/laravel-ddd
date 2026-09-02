@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+    public function join(mixed $user): array|bool
+    {
+        return false;
+    }
+}

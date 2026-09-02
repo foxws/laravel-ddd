@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Builder;
+
+final readonly class {{ class }}
+{
+    public function __invoke(Builder $query, mixed $value): void
+    {
+        //
+    }
+}

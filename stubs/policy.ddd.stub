@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+    public function viewAny(object $user): bool
+    {
+        return false;
+    }
+
+    public function view(object $user, object $model): bool
+    {
+        return false;
+    }
+
+    public function create(object $user): bool
+    {
+        return false;
+    }
+
+    public function update(object $user, object $model): bool
+    {
+        return false;
+    }
+
+    public function delete(object $user, object $model): bool
+    {
+        return false;
+    }
+}

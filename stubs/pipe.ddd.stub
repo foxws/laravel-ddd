@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Closure;
+
+final class {{ class }}
+{
+    public function handle(mixed $passable, Closure $next): mixed
+    {
+        return $next($passable);
+    }
+}

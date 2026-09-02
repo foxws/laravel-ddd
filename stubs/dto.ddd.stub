@@ -1,0 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Spatie\LaravelData\Dto;
+
+class {{ class }} extends Dto
+{
+    public function __construct(
+        //
+    ) {}
+}
