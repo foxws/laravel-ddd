@@ -85,6 +85,18 @@ it('has a stub for every built-in type', function (string $type) {
     'state', 'trait', 'value_object', 'view_model',
 ]);
 
+it('nests under an extra namespace segment when the substitution contains one', function () {
+    config(['ddd.substitutions' => ['query_builder' => 'Eloquent\Builders']]);
+
+    $this->artisan('ddd:make', ['name' => 'PostQueryBuilder', '--type' => 'query_builder', '--domain' => 'Posts'])
+        ->assertSuccessful();
+
+    $path = base_path('src/Domain/Posts/Eloquent/Builders/PostQueryBuilder.php');
+
+    expect(File::exists($path))->toBeTrue();
+    expect(File::get($path))->toContain('namespace Domain\Posts\Eloquent\Builders;');
+});
+
 it('fails when the target layer is disabled', function () {
     config(['ddd.layers.Domain' => null]);
 

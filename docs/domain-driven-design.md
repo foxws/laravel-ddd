@@ -125,7 +125,8 @@ Each type maps to a subfolder under the domain (`action` → `Actions`, `model` 
 ```php
 // config/ddd.php
 'substitutions' => [
-    'action' => 'CustomActions',
+    'action' => 'UseCases',                  // Domain\Invoice\Actions\... becomes Domain\Invoice\UseCases\...
+    'query_builder' => 'Eloquent\Builders',   // nest under an extra namespace segment
 ],
 ```
 
