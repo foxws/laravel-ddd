@@ -28,6 +28,30 @@ php artisan ddd:install --force            # overwrite namespaces that already p
 php artisan ddd:install --no-dump-autoload # skip regenerating the autoloader
 ```
 
+### Manual Install
+
+`ddd:install` is a convenience wrapper around a few file edits, so you can skip it and reproduce the same outcome by hand. Add the default layers, plus `Database\Factories\` and `Database\Seeders\`, to `autoload.psr-4`, and the `Foundation` layer's `Helpers.php` to `autoload.files`:
+
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "Domain\\": "src/Domain/",
+            "Modules\\": "src/Modules/",
+            "Foundation\\": "src/Foundation/",
+            "Support\\": "src/Support/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "src/Foundation/Helpers.php"
+        ]
+    }
+}
+```
+
+Then create the layer directories and `src/Foundation/Helpers.php` from the package's `helpers.ddd.stub` (see [Customizing Stubs](#customizing-stubs) to change its default content), and run `composer dump-autoload` to pick up the new mappings.
+
 ## Generating Classes
 
 `ddd:make` generates a class into a layer, in the style of `make:model` and friends:

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Foxws\Ddd\Console\Commands;
 
 use Foxws\Ddd\Support\ComposerHelper;
+use Foxws\Ddd\Support\DddStubs;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;
@@ -72,7 +73,7 @@ class DddInstallCommand extends Command
         }
 
         if (! $this->files->exists(base_path($helpersFile))) {
-            $this->files->put(base_path($helpersFile), "<?php\n\ndeclare(strict_types=1);\n");
+            $this->files->copy(DddStubs::resolve('helpers'), base_path($helpersFile));
         }
 
         if ($changed && ! $this->option('no-dump-autoload')) {

@@ -144,31 +144,7 @@ class DddMakeCommand extends GeneratorCommand
      */
     protected function resolveStub(string $type): string
     {
-        $override = DddStubs::get()[$type] ?? null;
-
-        if (is_string($override) && $override !== '') {
-            return $this->isAbsolutePath($override) ? $override : base_path($override);
-        }
-
-        return $this->resolveStubPath("/stubs/{$type}.ddd.stub");
-    }
-
-    /**
-     * Resolve the stub path, preferring one published to the application's stubs directory.
-     */
-    protected function resolveStubPath(string $stub): string
-    {
-        $customPath = base_path(trim($stub, '/'));
-
-        return file_exists($customPath) ? $customPath : __DIR__.'/../../../'.ltrim($stub, '/');
-    }
-
-    /**
-     * Determine whether the given path is absolute.
-     */
-    protected function isAbsolutePath(string $path): bool
-    {
-        return (bool) preg_match('/^(?:\/|[A-Za-z]:[\\\\\/])/', $path);
+        return DddStubs::resolve($type);
     }
 
     /**
