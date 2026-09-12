@@ -35,6 +35,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Event Auto Discovery
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, Laravel's event listener auto discovery resolves class
+    | names using each layer's namespace and path below, instead of assuming
+    | everything lives under app_path(). This lets listeners under Domain,
+    | Modules, or any other layer be discovered automatically.
+    |
+    */
+
+    'discover_events' => env('DDD_DISCOVER_EVENTS', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Layers
     |--------------------------------------------------------------------------
     |

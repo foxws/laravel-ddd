@@ -10,6 +10,8 @@ use Foxws\Ddd\Console\Commands\DddMakeDomainCommand;
 use Foxws\Ddd\Console\Commands\DddMakeFoundationCommand;
 use Foxws\Ddd\Console\Commands\DddMakeModuleCommand;
 use Foxws\Ddd\Console\Commands\DddMakeSupportCommand;
+use Foxws\Ddd\Support\DddEventDiscovery;
+use Illuminate\Foundation\Events\DiscoverEvents;
 use Illuminate\Support\ServiceProvider;
 
 class DddServiceProvider extends ServiceProvider
@@ -20,6 +22,11 @@ class DddServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/ddd.php', 'ddd');
+
+        // Registered in `register()`, not `boot()`, so the guesser is in
+        // place before the host app's own EventServiceProvider boots and
+        // calls discoverEvents() — all providers register() before any boot().
+        DiscoverEvents::guessClassNamesUsing(DddEventDiscovery::guessClassName(...));
     }
 
     /**

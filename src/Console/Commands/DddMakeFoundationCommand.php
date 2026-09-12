@@ -7,7 +7,7 @@ namespace Foxws\Ddd\Console\Commands;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'ddd:make-foundation')]
-class DddMakeFoundationCommand extends DddMakeCommand
+class DddMakeFoundationCommand extends AbstractDddMakeCommand
 {
     /**
      * The command signature.
