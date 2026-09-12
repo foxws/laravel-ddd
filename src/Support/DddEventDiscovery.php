@@ -23,9 +23,15 @@ class DddEventDiscovery
             $layers = Config::array('ddd.layers', []);
 
             foreach ($layers as $key => $layer) {
-                $layerPath = base_path(rtrim(Path::toRelative($layer['path']), '/'));
+                $relativePath = trim(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $layer['path']), DIRECTORY_SEPARATOR);
 
-                if ($layerPath === '' || ! str_starts_with($file->getRealPath(), $layerPath)) {
+                if ($relativePath === '') {
+                    continue;
+                }
+
+                $layerPath = base_path($relativePath);
+
+                if (! str_starts_with($file->getRealPath(), $layerPath)) {
                     continue;
                 }
 
