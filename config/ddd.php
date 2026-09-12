@@ -71,16 +71,16 @@ return [
         ],
 
         // Concrete adapters to external systems (repositories, storage, queues).
-        // 'Infrastructure' => [
-        //     'namespace' => env('DDD_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
-        //     'path' => env('DDD_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
-        // ],
+        'Infrastructure' => [
+            'namespace' => env('DDD_INFRASTRUCTURE_NAMESPACE', 'Infrastructure'),
+            'path' => env('DDD_INFRASTRUCTURE_PATH', 'src/Infrastructure'),
+        ],
 
         // Third-party service integrations (payments, notifications, etc.).
-        // 'Integrations' => [
-        //     'namespace' => env('DDD_INTEGRATIONS_NAMESPACE', 'Integrations'),
-        //     'path' => env('DDD_INTEGRATIONS_PATH', 'src/Integrations'),
-        // ],
+        'Integrations' => [
+            'namespace' => env('DDD_INTEGRATIONS_NAMESPACE', 'Integrations'),
+            'path' => env('DDD_INTEGRATIONS_PATH', 'src/Integrations'),
+        ],
 
     ],
 
