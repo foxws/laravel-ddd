@@ -6,3 +6,10 @@ parameters:
     tmpDir: build/phpstan
     configDirectories:
         - %currentWorkingDirectory%/config
+    ignoreErrors:
+        -
+            # The event class name is guessed dynamically from a file path,
+            # the same way Laravel's own default guesser works, so it can't
+            # be statically proven to be a class-string.
+            identifier: return.type
+            path: src/DddServiceProvider.php
