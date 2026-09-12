@@ -12,4 +12,4 @@ parameters:
             # the same way Laravel's own default guesser works, so it can't
             # be statically proven to be a class-string.
             identifier: return.type
-            path: src/DddServiceProvider.php
+            path: src/Support/DddEventDiscovery.php
