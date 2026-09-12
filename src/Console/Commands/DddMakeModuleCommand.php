@@ -7,7 +7,7 @@ namespace Foxws\Ddd\Console\Commands;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'ddd:make-module')]
-class DddMakeModuleCommand extends DddMakeCommand
+class DddMakeModuleCommand extends AbstractDddMakeCommand
 {
     /**
      * The command signature.
