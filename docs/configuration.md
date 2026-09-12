@@ -10,7 +10,7 @@ php artisan vendor:publish --tag="ddd-config"
 | --- | --- | --- | --- |
 | `substitutions` | `DDD_SUBSTITUTIONS` | `[]` | Overrides for the `--type` → subfolder mapping used by `ddd:make`. |
 | `stubs` | `DDD_STUBS` | `[]` | `type => stub path` overrides for `ddd:make`. |
-| `discover_events` | `DDD_DISCOVER_EVENTS` | `true` | Resolve discovered event listeners using each layer's `namespace`/`path` instead of assuming `app_path()`. |
+| `discover_events` | `DDD_DISCOVER_EVENTS` | `true` | Resolve discovered event listeners using each layer's `namespace`. |
 | `layers` | — | `Domain`, `Modules`, `Foundation`, `Support` | DDD layers, each with a `namespace` and `path`. |
 
 See [Domain Driven Design](domain-driven-design.md) for how `layers`, `substitutions`, and `stubs` are used.
