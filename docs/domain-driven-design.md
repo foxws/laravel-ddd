@@ -4,7 +4,7 @@ Laravel DDD ships a small set of commands for organizing an application into DDD
 
 ## Layers
 
-Layers are defined in `config('ddd.layers')`. Out of the box you get four:
+Layers are defined in `config('ddd.layers')`. Out of the box you get six:
 
 | Layer | Namespace | Path |
 | --- | --- | --- |
@@ -12,10 +12,12 @@ Layers are defined in `config('ddd.layers')`. Out of the box you get four:
 | `Modules` | `Modules\` | `src/Modules` |
 | `Foundation` | `Foundation\` | `src/Foundation` |
 | `Support` | `Support\` | `src/Support` |
+| `Infrastructure` | `Infrastructure\` | `src/Infrastructure` |
+| `Integrations` | `Integrations\` | `src/Integrations` |
 
 Publish the config file to add, rename, or remove layers, or point an existing one at `App\` to keep everything under `app/`.
 
-Two more layers, `Infrastructure` (repositories, storage, queues) and `Integrations` (third-party services), ship commented out in the config — uncomment them to opt in.
+`Infrastructure` holds concrete adapters to external systems (repositories, storage, queues); `Integrations` holds third-party service integrations (payments, notifications, etc.). Remove either from the published config if your application doesn't need the distinction.
 
 ## Installing The Structure
 
@@ -42,6 +44,8 @@ php artisan ddd:install --no-dump-autoload # skip regenerating the autoloader
             "Modules\\": "src/Modules/",
             "Foundation\\": "src/Foundation/",
             "Support\\": "src/Support/",
+            "Infrastructure\\": "src/Infrastructure/",
+            "Integrations\\": "src/Integrations/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
@@ -52,7 +56,7 @@ php artisan ddd:install --no-dump-autoload # skip regenerating the autoloader
 }
 ```
 
-If you've uncommented the `Infrastructure` or `Integrations` layers in `config/ddd.php`, add them to `autoload.psr-4` the same way: `"Infrastructure\\": "src/Infrastructure/"` and `"Integrations\\": "src/Integrations/"`.
+If you removed the `Infrastructure` or `Integrations` layers from `config/ddd.php`, drop them from `autoload.psr-4` the same way.
 
 Then create the layer directories and `src/Foundation/Helpers.php` from the package's `helpers.ddd.stub` (see [Customizing Stubs](#customizing-stubs) to change its default content), and run `composer dump-autoload` to pick up the new mappings.
 
@@ -132,7 +136,7 @@ Each type maps to a subfolder under the domain (`action` → `Actions`, `model` 
 
 ## Path Helpers
 
-Two helpers resolve paths the same way the generators do:
+A helper resolves the path for each default layer, the same way the generators do:
 
 ```php
 domain_path();                  // base_path('src/Domain')
@@ -141,5 +145,21 @@ domain_path('Invoice/Actions'); // base_path('src/Domain/Invoice/Actions')
 modules_path();                 // base_path('src/Modules')
 modules_path('Web/Controllers'); // base_path('src/Modules/Web/Controllers')
 
-layer_path('Support', 'Money'); // base_path('src/Support/Money')
+foundation_path();              // base_path('src/Foundation')
+foundation_path('Providers');   // base_path('src/Foundation/Providers')
+
+support_path();                 // base_path('src/Support')
+support_path('Money');          // base_path('src/Support/Money')
+
+infrastructure_path();          // base_path('src/Infrastructure')
+infrastructure_path('Storage'); // base_path('src/Infrastructure/Storage')
+
+integrations_path();            // base_path('src/Integrations')
+integrations_path('Stripe');    // base_path('src/Integrations/Stripe')
+```
+
+For a custom or renamed layer, use `layer_path()` directly:
+
+```php
+layer_path('Billing', 'Invoices'); // base_path('src/Billing/Invoices')
 ```

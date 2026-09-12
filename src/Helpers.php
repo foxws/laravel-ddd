@@ -33,3 +33,43 @@ if (! function_exists('modules_path')) {
         return layer_path('Modules', $path);
     }
 }
+
+if (! function_exists('foundation_path')) {
+    /**
+     * Get the path to the Foundation layer.
+     */
+    function foundation_path(string $path = ''): string
+    {
+        return layer_path('Foundation', $path);
+    }
+}
+
+if (! function_exists('support_path')) {
+    /**
+     * Get the path to the Support layer.
+     */
+    function support_path(string $path = ''): string
+    {
+        return layer_path('Support', $path);
+    }
+}
+
+if (! function_exists('infrastructure_path')) {
+    /**
+     * Get the path to the Infrastructure layer.
+     */
+    function infrastructure_path(string $path = ''): string
+    {
+        return layer_path('Infrastructure', $path);
+    }
+}
+
+if (! function_exists('integrations_path')) {
+    /**
+     * Get the path to the Integrations layer.
+     */
+    function integrations_path(string $path = ''): string
+    {
+        return layer_path('Integrations', $path);
+    }
+}
