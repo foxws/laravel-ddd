@@ -1,8 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.2...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.3...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [0.0.3](https://github.com/foxws/laravel-ddd/compare/0.0.2...0.0.3) - 2026-09-12
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Enable Infrastructure/Integrations layers by default, add matching path helpers by @francoism90 in https://github.com/foxws/laravel-ddd/pull/2
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.2...0.0.3
 
 ## [0.0.2](https://github.com/foxws/laravel-ddd/compare/0.0.1...0.0.2) - 2026-09-12
 
