@@ -35,7 +35,7 @@ php artisan ddd:install
 php artisan ddd:make CreateInvoice --type=action --domain=Billing
 ```
 
-See the [documentation](docs/README.md) for the full list of layers, generator types, and how to customize stubs and subfolders.
+See the [documentation](docs/index.md) for the full list of layers, generator types, and how to customize stubs and subfolders.
 
 ## Changelog
 

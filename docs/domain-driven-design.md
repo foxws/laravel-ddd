@@ -1,6 +1,11 @@
+---
+section: Usage
+order: 1
+---
+
 # Domain Driven Design
 
-Laravel DDD ships a small set of commands for organizing an application into DDD-style layers instead of the default `app/` structure.
+Laravel DDD adds a small set of commands for organizing an app into DDD-style layers, instead of the default `app/` structure.
 
 ## Layers
 
@@ -15,9 +20,9 @@ Layers are defined in `config('ddd.layers')`. Out of the box you get six:
 | `Infrastructure` | `Infrastructure\` | `src/Infrastructure` |
 | `Integrations` | `Integrations\` | `src/Integrations` |
 
-Publish the config file to add, rename, or remove layers, or point an existing one at `App\` to keep everything under `app/`.
+Publish the config file to add, rename, or remove layers, or to point an existing layer back at `App\` if you'd rather keep it under `app/`.
 
-`Infrastructure` holds concrete adapters to external systems (repositories, storage, queues); `Integrations` holds third-party service integrations (payments, notifications, etc.). Remove either from the published config if your application doesn't need the distinction.
+`Infrastructure` holds concrete adapters to external systems, like repositories, storage, and queues. `Integrations` holds third-party service integrations, like payments and notifications. Remove either one from the published config if your app doesn't need the distinction.
 
 ## Installing The Structure
 
@@ -25,7 +30,7 @@ Publish the config file to add, rename, or remove layers, or point an existing o
 php artisan ddd:install
 ```
 
-This registers each layer's namespace in your `composer.json` `autoload.psr-4` map, creates the layer directories, and dumps the autoloader. Run it once, right after installing the package.
+This registers each layer's namespace in your `composer.json`'s `autoload.psr-4` map, creates the layer directories, and rebuilds the autoloader. Run it once, right after installing the package.
 
 ```bash
 php artisan ddd:install --force            # overwrite namespaces that already point elsewhere
@@ -34,7 +39,7 @@ php artisan ddd:install --no-dump-autoload # skip regenerating the autoloader
 
 ### Manual Install
 
-`ddd:install` is a convenience wrapper around a few file edits, so you can skip it and reproduce the same outcome by hand. Add the default layers, plus `Database\Factories\` and `Database\Seeders\`, to `autoload.psr-4`, and the `Foundation` layer's `Helpers.php` to `autoload.files`:
+`ddd:install` is just a convenience wrapper around a few file edits, so you can skip it and reproduce the same result by hand. Add the default layers, plus `Database\Factories\` and `Database\Seeders\`, to `autoload.psr-4`, and add the `Foundation` layer's `Helpers.php` to `autoload.files`:
 
 ```json
 {
@@ -62,7 +67,7 @@ Then create the layer directories and `src/Foundation/Helpers.php` from the pack
 
 ## Generating Classes
 
-`ddd:make` generates a class into a layer, in the style of `make:model` and friends:
+`ddd:make` generates a class into a layer, similar to Laravel's own `make:model` and other generator commands:
 
 ```bash
 php artisan ddd:make CreateInvoice --type=action
@@ -75,7 +80,7 @@ The domain is guessed from the class name (`Invoice` here) unless you pass `--do
 php artisan ddd:make Actions/CreateInvoice --type=action --domain=Billing
 ```
 
-Layer-specific shortcuts skip the `--layer` option:
+Each layer also has its own shortcut command, so you don't need to pass `--layer`:
 
 ```bash
 php artisan ddd:make-domain Invoice --type=model
@@ -86,7 +91,7 @@ php artisan ddd:make-support Money --type=value_object
 
 ### Available Types
 
-`--type` selects both the stub and the subfolder the class is generated into:
+`--type` picks both the stub and the subfolder the class is generated into:
 
 ```text
 action        cast          channel       class         collection
@@ -101,7 +106,7 @@ trait         value_object  view_model
 
 ## Customizing Stubs
 
-Publish the stubs to override them for the whole application:
+Publish the stubs if you want to change them for the whole app:
 
 ```bash
 php artisan vendor:publish --tag=ddd-stubs
