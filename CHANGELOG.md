@@ -1,8 +1,20 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.5...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.6...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [0.0.6](https://github.com/foxws/laravel-ddd/compare/0.0.5...0.0.6) - 2026-10-02
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* docs: add the foxws.nl homepage group and a hero lead by @francoism90 in https://github.com/foxws/laravel-ddd/pull/5
+* Raise PHPStan to level 8 by @francoism90 in https://github.com/foxws/laravel-ddd/pull/6
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.5...0.0.6
 
 ## [0.0.5](https://github.com/foxws/laravel-ddd/compare/0.0.4...0.0.5) - 2026-09-17
 
