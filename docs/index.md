@@ -2,6 +2,7 @@
 title: Introduction
 metadata:
   role: Architecture
+  group: foundations
   eyebrow: "DDD · Scaffolding · Artisan"
   desc: "Organize your Laravel app into Domain-Driven Design layers."
   requires: "PHP ^8.4"
