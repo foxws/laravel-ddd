@@ -5,9 +5,14 @@ metadata:
   group: foundations
   eyebrow: "DDD · Scaffolding · Artisan"
   desc: "Organize your Laravel app into Domain-Driven Design layers."
+  lead: "Set up Domain-Driven Design layers with one command, then generate classes straight into the right layer."
   requires: "PHP ^8.4"
   laravel: "13.x"
   licence: MIT
+  used_by:
+    name: Stry
+    desc: "A self-hosted video streaming app."
+    href: "https://github.com/francoism90/stry"
 ---
 
 # Introduction
