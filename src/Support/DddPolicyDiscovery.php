@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Foxws\Ddd\Support;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
 class DddPolicyDiscovery
@@ -17,23 +16,26 @@ class DddPolicyDiscovery
      */
     public static function guessPolicyNames(string $class): array
     {
-        if (! Config::boolean('ddd.discover_policies', true)) {
+        $layers = DddDiscovery::layers('discover_policies');
+
+        if ($layers === []) {
             return static::defaultPolicyNames($class);
         }
 
         return array_values(array_unique([
-            ...static::layerPolicyNames($class),
+            ...static::layerPolicyNames($class, $layers),
             ...static::defaultPolicyNames($class),
         ]));
     }
 
     /**
-     * Guess the policy class names using the configured layers, e.g.
+     * Guess the policy class names using the enabled layers, e.g.
      * Domain\Users\Models\User resolves to Domain\Users\Policies\UserPolicy.
      *
+     * @param  array<string, array{namespace?: string, path: string}>  $layers
      * @return list<string>
      */
-    protected static function layerPolicyNames(string $class): array
+    protected static function layerPolicyNames(string $class, array $layers): array
     {
         $substitutions = DddSubstitutions::get();
 
@@ -46,9 +48,6 @@ class DddPolicyDiscovery
 
         $policy = class_basename($class).'Policy';
         $classNamespace = Str::beforeLast($class, '\\');
-
-        /** @var array<string, array{namespace?: string, path: string}> $layers */
-        $layers = Config::array('ddd.layers', []);
 
         $names = [];
 
@@ -64,8 +63,10 @@ class DddPolicyDiscovery
             }
         }
 
-        if (isset($layers['Domain'])) {
-            $names[] = Path::toNamespace($layers['Domain']['namespace'] ?? 'Domain')
+        $pluralLayers = DddDiscovery::enabledLayerKeys('discover_policies') ?? ['Domain'];
+
+        foreach (array_intersect_key($layers, array_flip($pluralLayers)) as $key => $layer) {
+            $names[] = Path::toNamespace($layer['namespace'] ?? $key)
                 .Str::pluralStudly(class_basename($class)).'\\'.$policies.'\\'.$policy;
         }
 

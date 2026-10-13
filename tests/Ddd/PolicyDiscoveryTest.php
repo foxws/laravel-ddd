@@ -8,6 +8,7 @@ use Fixtures\Domain\Billing\Permissions\InvoicePolicy as SubstitutedInvoicePolic
 use Fixtures\Domain\Billing\Policies\InvoicePolicy;
 use Fixtures\Domain\Users\Policies\UserPolicy;
 use Fixtures\Models\Post;
+use Fixtures\Modules\Users\Policies\UserPolicy as ModulesUserPolicy;
 use Fixtures\Policies\PostPolicy;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -21,6 +22,7 @@ beforeEach(function () {
         'Domain/Billing/Policies/InvoicePolicy.php' => 'namespace Fixtures\Domain\Billing\Policies; class InvoicePolicy {}',
         'Domain/Billing/Permissions/InvoicePolicy.php' => 'namespace Fixtures\Domain\Billing\Permissions; class InvoicePolicy {}',
         'Domain/Users/Policies/UserPolicy.php' => 'namespace Fixtures\Domain\Users\Policies; class UserPolicy {}',
+        'Modules/Users/Policies/UserPolicy.php' => 'namespace Fixtures\Modules\Users\Policies; class UserPolicy {}',
     ];
 
     foreach ($fixtures as $path => $code) {
@@ -32,6 +34,8 @@ beforeEach(function () {
 
     config()->set('ddd.layers.Domain.namespace', 'Fixtures\Domain');
     config()->set('ddd.layers.Domain.path', 'fixtures/Domain');
+    config()->set('ddd.layers.Modules.namespace', 'Fixtures\Modules');
+    config()->set('ddd.layers.Modules.path', 'fixtures/Modules');
 });
 
 afterEach(function () {
@@ -61,4 +65,10 @@ it('only uses the default policy guesses when disabled', function () {
 
     expect(Gate::getPolicyFor(User::class))->toBeNull();
     expect(Gate::getPolicyFor(Post::class))->toBeInstanceOf(PostPolicy::class);
+});
+
+it('discovers pluralized policies in the listed layers', function () {
+    config()->set('ddd.discover_policies', ['Modules']);
+
+    expect(Gate::getPolicyFor(User::class))->toBeInstanceOf(ModulesUserPolicy::class);
 });
