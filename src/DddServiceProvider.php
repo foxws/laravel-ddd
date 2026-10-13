@@ -11,6 +11,9 @@ use Foxws\Ddd\Console\Commands\DddMakeFoundationCommand;
 use Foxws\Ddd\Console\Commands\DddMakeModuleCommand;
 use Foxws\Ddd\Console\Commands\DddMakeSupportCommand;
 use Foxws\Ddd\Support\DddEventDiscovery;
+use Foxws\Ddd\Support\DddPolicyDiscovery;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Events\DiscoverEvents;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +30,14 @@ class DddServiceProvider extends ServiceProvider
         // place before the host app's own EventServiceProvider boots and
         // calls discoverEvents() — all providers register() before any boot().
         DiscoverEvents::guessClassNamesUsing(DddEventDiscovery::guessClassName(...));
+
+        // Registered once the gate resolves, so a guesser set later by the
+        // host app (e.g. in its AuthServiceProvider) still takes precedence.
+        $this->callAfterResolving(GateContract::class, function (GateContract $gate): void {
+            if ($gate instanceof Gate) {
+                $gate->guessPolicyNamesUsing(DddPolicyDiscovery::guessPolicyNames(...));
+            }
+        });
     }
 
     /**

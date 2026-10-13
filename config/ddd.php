@@ -49,6 +49,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Policy Auto Discovery
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, Laravel's policy auto discovery also looks for policies
+    | next to each layer's models, e.g. Domain\Users\Models\User resolves to
+    | Domain\Users\Policies\UserPolicy, before Laravel's default guesses.
+    |
+    */
+
+    'discover_policies' => env('DDD_DISCOVER_POLICIES', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Layers
     |--------------------------------------------------------------------------
     |
