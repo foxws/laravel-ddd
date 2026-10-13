@@ -68,3 +68,19 @@ it('falls back to the default guesser when disabled', function () {
 
     expect($events)->not->toHaveKey(UserRegistered::class);
 });
+
+it('discovers listeners in the listed layers', function () {
+    config()->set('ddd.discover_events', 'Modules,Domain');
+
+    $events = DiscoverEvents::within($this->layerPath.'/Listeners', app_path());
+
+    expect($events)->toHaveKey(UserRegistered::class);
+});
+
+it('skips layers that are not listed', function () {
+    config()->set('ddd.discover_events', ['Modules']);
+
+    $events = DiscoverEvents::within($this->layerPath.'/Listeners', app_path());
+
+    expect($events)->not->toHaveKey(UserRegistered::class);
+});
