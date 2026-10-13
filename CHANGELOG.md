@@ -1,8 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.7...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.8...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [0.0.8](https://github.com/foxws/laravel-ddd/compare/0.0.7...0.0.8) - 2026-10-13
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Generate channels into Broadcasting to match make:channel by @francoism90 in https://github.com/foxws/laravel-ddd/pull/8
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.7...0.0.8
 
 ## [0.0.7](https://github.com/foxws/laravel-ddd/compare/0.0.6...0.0.7) - 2026-10-13
 
