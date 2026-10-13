@@ -37,6 +37,16 @@ it('generates into a different layer via --layer', function () {
     expect(File::exists(base_path('src/Modules/Posts/Models/Post.php')))->toBeTrue();
 });
 
+it('generates channels into Broadcasting like make:channel', function () {
+    $this->artisan('ddd:make', ['name' => 'PostChannel', '--type' => 'channel', '--domain' => 'Posts'])
+        ->assertSuccessful();
+
+    $path = base_path('src/Domain/Posts/Broadcasting/PostChannel.php');
+
+    expect(File::exists($path))->toBeTrue();
+    expect(File::get($path))->toContain('namespace Domain\Posts\Broadcasting;');
+});
+
 it('fails for an unknown type', function () {
     $this->artisan('ddd:make', ['name' => 'Post', '--type' => 'bogus', '--domain' => 'Posts'])
         ->expectsOutputToContain('Unknown type "bogus".')
