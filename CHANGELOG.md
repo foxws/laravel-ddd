@@ -1,8 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.6...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.7...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [0.0.7](https://github.com/foxws/laravel-ddd/compare/0.0.6...0.0.7) - 2026-10-13
+
+<!-- Release notes generated using configuration in .github/release.yml at a552de37b8f868ebfda0de08dd03ba8a02ed866c -->
+### What's Changed
+
+#### Other Changes
+
+* Add discover_policies config for layer-aware policy discovery by @francoism90 in https://github.com/foxws/laravel-ddd/pull/7
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.6...0.0.7
 
 ## [0.0.6](https://github.com/foxws/laravel-ddd/compare/0.0.5...0.0.6) - 2026-10-02
 
