@@ -18,7 +18,7 @@ class DddSubstitutions
         return [
             'action' => 'Actions',
             'cast' => 'Casts',
-            'channel' => 'Channels',
+            'channel' => 'Broadcasting',
             'class' => '',
             'collection' => 'Collections',
             'command' => 'Commands',
