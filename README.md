@@ -26,6 +26,16 @@ You may publish the package's config file:
 php artisan vendor:publish --tag="ddd-config"
 ```
 
+> [!TIP]
+> Let your AI agent do the hard parts. This package ships a [Laravel Boost](https://laravel.com/docs/boost) skill, `laravel-ddd-development`, that teaches your agent how to install, configure and use Laravel DDD. Install Boost and select the skill when prompted:
+>
+> ```bash
+> composer require laravel/boost --dev
+> php artisan boost:install
+> ```
+>
+> Already using Boost? Run `php artisan boost:update --discover` to pick up the skill. Then just ask, for example: *"Set up Laravel DDD and create a CreateInvoice action in a Billing domain."*
+
 ## Usage
 
 Install the DDD layer structure, then generate classes into it:
