@@ -1,8 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.8...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.9...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [0.0.9](https://github.com/foxws/laravel-ddd/compare/0.0.8...0.0.9) - 2026-10-14
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Add Laravel Boost tip to README and docs by @francoism90 in https://github.com/foxws/laravel-ddd/pull/9
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.8...0.0.9
 
 ## [0.0.8](https://github.com/foxws/laravel-ddd/compare/0.0.7...0.0.8) - 2026-10-13
 
