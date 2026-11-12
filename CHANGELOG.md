@@ -1,8 +1,25 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/0.0.9...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/1.0.0...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [1.0.0](https://github.com/foxws/laravel-ddd/compare/0.0.9...1.0.0) - 2026-11-12
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+### What's Changed
+
+#### Other Changes
+
+* Match a listener's layer by directory, not by path prefix by @francoism90 in https://github.com/foxws/laravel-ddd/pull/12
+* Discover the listeners and console commands in every domain by @francoism90 in https://github.com/foxws/laravel-ddd/pull/13
+* Bump shivammathur/setup-php from 2.37.2 to 2.40.0 by @dependabot[bot] in https://github.com/foxws/laravel-ddd/pull/10
+
+### New Contributors
+
+* @dependabot[bot] made their first contribution in https://github.com/foxws/laravel-ddd/pull/10
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/0.0.9...1.0.0
 
 ## [0.0.9](https://github.com/foxws/laravel-ddd/compare/0.0.8...0.0.9) - 2026-10-14
 
