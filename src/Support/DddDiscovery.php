@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Foxws\Ddd\Support;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class DddDiscovery
 {
@@ -52,5 +53,75 @@ class DddDiscovery
             fn (mixed $key): string => trim((string) $key),
             (array) $value,
         )));
+    }
+
+    /**
+     * The glob patterns for the given type's folder in every domain of the
+     * layers the discovery option applies to, e.g. src/Domain/{domain}/Listeners.
+     *
+     * @return list<string>
+     */
+    public static function typePaths(string $option, string $type): array
+    {
+        $subfolder = trim(str_replace('\\', '/', DddSubstitutions::get()[$type] ?? ''), '/');
+
+        if ($subfolder === '') {
+            return [];
+        }
+
+        $paths = [];
+
+        foreach (static::layers($option) as $layer) {
+            if (($layerPath = static::layerPath($layer)) !== null) {
+                $paths[] = "{$layerPath}/*/{$subfolder}";
+            }
+        }
+
+        return $paths;
+    }
+
+    /**
+     * The class a file in one of the given layers declares, following the
+     * layer's namespace and path, or null when it isn't in any of them.
+     *
+     * @param  array<string, array{namespace?: string, path: string}>  $layers
+     */
+    public static function classFromFile(string $realPath, array $layers): ?string
+    {
+        foreach ($layers as $key => $layer) {
+            $layerPath = static::layerPath($layer);
+
+            if ($layerPath === null) {
+                continue;
+            }
+
+            $layerPath = (realpath($layerPath) ?: $layerPath).DIRECTORY_SEPARATOR;
+
+            if (! str_starts_with($realPath, $layerPath)) {
+                continue;
+            }
+
+            $class = Str::of($realPath)
+                ->after($layerPath)
+                ->replaceLast('.php', '')
+                ->replace(DIRECTORY_SEPARATOR, '\\')
+                ->toString();
+
+            return Path::toNamespace($layer['namespace'] ?? $key).$class;
+        }
+
+        return null;
+    }
+
+    /**
+     * The absolute path of the given layer, or null when it has no path.
+     *
+     * @param  array{namespace?: string, path: string}  $layer
+     */
+    protected static function layerPath(array $layer): ?string
+    {
+        $relativePath = trim(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $layer['path']), DIRECTORY_SEPARATOR);
+
+        return $relativePath !== '' ? base_path($relativePath) : null;
     }
 }

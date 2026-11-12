@@ -38,10 +38,11 @@ return [
     | Event Auto Discovery
     |--------------------------------------------------------------------------
     |
-    | When enabled, Laravel's event listener auto discovery resolves class
-    | names using each layer's namespace and path below, instead of assuming
-    | everything lives under app_path(). This lets listeners under Domain,
-    | Modules, or any other layer be discovered automatically.
+    | When enabled, Laravel's event listener auto discovery looks in each
+    | domain's listener folder, e.g. src/Domain/Users/Listeners, and resolves
+    | class names using each layer's namespace and path below, instead of
+    | assuming everything lives under app_path(). This lets listeners under
+    | Domain, Modules, or any other layer be discovered automatically.
     |
     | Set it to true for every layer, false to disable it, or a list (or
     | comma-separated string) of layer keys, e.g. ['Domain', 'Modules'].
@@ -67,6 +68,22 @@ return [
     */
 
     'discover_policies' => env('DDD_DISCOVER_POLICIES', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Command Auto Discovery
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, the console commands in each domain's command folder,
+    | e.g. src/Domain/Users/Commands, are registered with Artisan, so they
+    | don't have to be listed in bootstrap/app.php's withCommands().
+    |
+    | Set it to true for every layer, false to disable it, or a list (or
+    | comma-separated string) of layer keys, e.g. ['Domain', 'Modules'].
+    |
+    */
+
+    'discover_commands' => env('DDD_DISCOVER_COMMANDS', true),
 
     /*
     |--------------------------------------------------------------------------
