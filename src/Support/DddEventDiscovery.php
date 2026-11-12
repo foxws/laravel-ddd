@@ -17,24 +17,10 @@ class DddEventDiscovery
      */
     public static function guessClassName(SplFileInfo $file, string $basePath): string
     {
-        foreach (DddDiscovery::layers('discover_events') as $key => $layer) {
-            $relativePath = trim(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $layer['path']), DIRECTORY_SEPARATOR);
+        $class = DddDiscovery::classFromFile($file->getRealPath(), DddDiscovery::layers('discover_events'));
 
-            if ($relativePath === '') {
-                continue;
-            }
-
-            $layerPath = base_path($relativePath);
-
-            if (! str_starts_with($file->getRealPath(), $layerPath.DIRECTORY_SEPARATOR)) {
-                continue;
-            }
-
-            $class = trim(Str::replaceFirst($layerPath, '', $file->getRealPath()), DIRECTORY_SEPARATOR);
-
-            return Path::toNamespace($layer['namespace'] ?? $key).str_replace(
-                DIRECTORY_SEPARATOR, '\\', Str::replaceLast('.php', '', $class),
-            );
+        if ($class !== null) {
+            return $class;
         }
 
         $class = trim(Str::replaceFirst($basePath, '', $file->getRealPath()), DIRECTORY_SEPARATOR);

@@ -15,8 +15,9 @@ php artisan vendor:publish --tag="ddd-config"
 | --- | --- | --- | --- |
 | `substitutions` | — | `[]` | Overrides the type → subfolder mapping used by `ddd:make`, e.g. pointing `action` at a different folder than `Actions`. |
 | `stubs` | — | `[]` | Maps a type to a stub file, when it shouldn't come from `stubs/{type}.ddd.stub` or the package's bundled stub. |
-| `discover_events` | `DDD_DISCOVER_EVENTS` | `true` | When enabled, Laravel's event listener discovery resolves class names using each layer's namespace and path, not just `app/`. Use a list of layer keys (or `Domain,Modules` in the env) to limit it to those layers. |
+| `discover_events` | `DDD_DISCOVER_EVENTS` | `true` | When enabled, Laravel's event listener discovery looks in each domain's listener folder (e.g. `src/Domain/Users/Listeners`, next to `app/Listeners`) and resolves class names using each layer's namespace and path, not just `app/`. Use a list of layer keys (or `Domain,Modules` in the env) to limit it to those layers. |
 | `discover_policies` | `DDD_DISCOVER_POLICIES` | `true` | When enabled, policy auto discovery looks for a model's policy in its layer — `Domain\Users\Models\User` resolves to `Domain\Users\Policies\UserPolicy` — before Laravel's default guesses. Use a list of layer keys to limit it to those layers; the pluralized `{Layer}\{PluralModel}\Policies` guess applies to `Domain` only, unless you list the layers. |
+| `discover_commands` | `DDD_DISCOVER_COMMANDS` | `true` | When enabled, the console commands in each domain's command folder (e.g. `src/Domain/Users/Commands`) are registered with Artisan, so they don't need to be listed in `withCommands()`. Use a list of layer keys to limit it to those layers. |
 | `layers` | — | `Domain`, `Modules`, `Foundation`, `Support`, `Infrastructure`, `Integrations` | The DDD layers. Each layer has its own `namespace` and `path`. |
 
 ## Layers
