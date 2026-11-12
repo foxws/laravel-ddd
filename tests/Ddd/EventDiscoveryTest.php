@@ -84,3 +84,38 @@ it('skips layers that are not listed', function () {
 
     expect($events)->not->toHaveKey(UserRegistered::class);
 });
+
+it('does not match a layer whose path only shares a prefix with the listener', function () {
+    $extrasPath = base_path('fixtures/domain-extras');
+
+    File::ensureDirectoryExists($extrasPath.'/Listeners');
+
+    File::put($extrasPath.'/Listeners/SendInvoice.php', <<<'PHP'
+        <?php
+
+        namespace Fixtures\DomainExtras\Listeners;
+
+        use Fixtures\Domain\Events\UserRegistered;
+
+        class SendInvoice
+        {
+            public function handle(UserRegistered $event): void
+            {
+                //
+            }
+        }
+        PHP
+    );
+
+    require_once $extrasPath.'/Listeners/SendInvoice.php';
+
+    config()->set('ddd.layers.DomainExtras', [
+        'namespace' => 'Fixtures\DomainExtras',
+        'path' => 'fixtures/domain-extras',
+    ]);
+
+    $events = DiscoverEvents::within($extrasPath.'/Listeners', app_path());
+
+    expect($events[UserRegistered::class] ?? [])
+        ->toContain('Fixtures\DomainExtras\Listeners\SendInvoice@handle');
+});
