@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'substitutions' => env('DDD_SUBSTITUTIONS', [
+    'substitutions' => [
         // 'action' => 'CustomActions',
-    ]),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -29,9 +29,9 @@ return [
     |
     */
 
-    'stubs' => env('DDD_STUBS', [
+    'stubs' => [
         // 'action' => 'stubs/ddd/custom-action.stub',
-    ]),
+    ],
 
     /*
     |--------------------------------------------------------------------------

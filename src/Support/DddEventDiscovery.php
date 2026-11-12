@@ -26,7 +26,7 @@ class DddEventDiscovery
 
             $layerPath = base_path($relativePath);
 
-            if (! str_starts_with($file->getRealPath(), $layerPath)) {
+            if (! str_starts_with($file->getRealPath(), $layerPath.DIRECTORY_SEPARATOR)) {
                 continue;
             }
 
