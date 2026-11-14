@@ -27,6 +27,7 @@ class DddSubstitutions
             'data' => 'DataObjects',
             'dto' => 'DataObjects',
             'enum' => 'Enums',
+            'enumerable' => 'Enums',
             'event' => 'Events',
             'exception' => 'Exceptions',
             'factory' => 'Database\Factories',

@@ -89,11 +89,25 @@ it('has a stub for every built-in type', function (string $type) {
         ->assertSuccessful();
 })->with([
     'action', 'cast', 'channel', 'class', 'collection', 'command', 'contract', 'controller',
-    'data', 'dto', 'enum', 'event', 'exception', 'factory', 'filter', 'job', 'listener', 'mail',
+    'data', 'dto', 'enum', 'enumerable', 'event', 'exception', 'factory', 'filter', 'job', 'listener', 'mail',
     'middleware', 'migration', 'model', 'notification', 'observer', 'pipe', 'policy', 'provider',
     'query_builder', 'request', 'resource', 'rule', 'scope', 'seeder', 'service', 'setting',
     'state', 'trait', 'value_object', 'view_model',
 ]);
+
+it('generates an enum with labels for foxws/laravel-essentials', function () {
+    $this->artisan('ddd:make', ['name' => 'InvoiceStatus', '--type' => 'enumerable', '--domain' => 'Invoices'])
+        ->assertSuccessful();
+
+    $path = base_path('src/Domain/Invoices/Enums/InvoiceStatus.php');
+
+    expect(File::exists($path))->toBeTrue();
+    expect(File::get($path))
+        ->toContain('namespace Domain\Invoices\Enums;')
+        ->toContain('enum InvoiceStatus: string implements Enumerable')
+        ->toContain('use HasLabels;')
+        ->toContain('return match ($this) {');
+});
 
 it('nests under an extra namespace segment when the substitution contains one', function () {
     config(['ddd.substitutions' => ['query_builder' => 'Eloquent\Builders']]);
