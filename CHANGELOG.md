@@ -1,8 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/1.0.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/1.1.0...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [1.1.0](https://github.com/foxws/laravel-ddd/compare/1.0.0...1.1.0) - 2026-11-14
+
+<!-- Release notes generated using configuration in .github/release.yml at e327cff705a86a27953920c5522f6b67f05ec074 -->
+### What's Changed
+
+#### Other Changes
+
+* Add an enumerable stub for foxws/laravel-essentials enums by @francoism90 in https://github.com/foxws/laravel-ddd/pull/15
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/1.0.0...1.1.0
 
 ## [1.0.0](https://github.com/foxws/laravel-ddd/compare/0.0.9...1.0.0) - 2026-11-12
 
