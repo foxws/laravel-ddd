@@ -96,12 +96,18 @@ php artisan ddd:make-support Money --type=value_object
 ```text
 action        cast          channel       class         collection
 command       contract      controller    data          dto
-enum          event         exception     factory       filter
-job           listener      mail          middleware    migration
-model         notification  observer      pipe          policy
-provider      query_builder request       resource      rule
-scope         seeder        service       setting       state
-trait         value_object  view_model
+enum          enumerable    event         exception     factory
+filter        job           listener      mail          middleware
+migration     model         notification  observer      pipe
+policy        provider      query_builder request       resource
+rule          scope         seeder        service       setting
+state         trait         value_object  view_model
+```
+
+Some stubs extend classes from packages that aren't installed with this one: `data` needs [spatie/laravel-data](https://github.com/spatie/laravel-data), `setting` [spatie/laravel-settings](https://github.com/spatie/laravel-settings), `state` [spatie/laravel-model-states](https://github.com/spatie/laravel-model-states), and `enumerable` [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials). `enumerable` generates a backed enum that implements essentials' `Enumerable` and uses `HasLabels`, with `label()` written as a `match`:
+
+```bash
+php artisan ddd:make InvoiceStatus --type=enumerable --domain=Invoices
 ```
 
 ## Customizing Stubs

@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Foxws\Essentials\Concerns\HasLabels;
+use Foxws\Essentials\Contracts\Enumerable;
+
+enum {{ class }}: string implements Enumerable
+{
+    use HasLabels;
+
+    case Example = 'example';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Example => __('Example'),
+        };
+    }
+}
