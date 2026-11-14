@@ -116,3 +116,9 @@ Read before executing:
 - Do not hand-roll `app/` subfolder conventions once this package is installed — use `ddd:make` (or its layer-specific shortcuts) so generated classes land in the configured namespace and subfolder.
 - Do not use this package for the opinionated Laravel defaults (`Model::shouldBeStrict()`, `URL::forceHttps()`, etc.) — that's the separate `foxws/laravel-essentials` package.
 - Do not document package internals here; keep the skill focused on adoption in Laravel apps.
+
+## Building blocks
+
+- `Foxws\Ddd\Concerns\HasUlidRouteKey`: keeps the incrementing id and fills a unique `ulid` column that routes bind to; add `$table->ulid('ulid')->unique()` to the migration. `Model::findFromUlid($ulid)` looks a model up by it
+- `Foxws\Ddd\Contracts\Enumerable`: a backed enum with `label()` and `static labels()` (labels keyed by value), for select options
+

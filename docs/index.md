@@ -53,6 +53,7 @@ php artisan ddd:make CreateInvoice --type=action --domain=Billing
 ## Learn more
 
 - [Domain Driven Design](domain-driven-design.md) — the layers, `ddd:install`, and `ddd:make`.
+- [Building Blocks](building-blocks.md) — `HasUlidRouteKey` and the `Enumerable` contract.
 - [Configuration Reference](configuration.md) — every `config/ddd.php` option.
 
 Looking for Laravel Essentials' sensible defaults (`Model::shouldBeStrict()`, `URL::forceHttps()`, and more)? Those live in a separate package, [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials).
