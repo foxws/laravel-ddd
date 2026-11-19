@@ -1,8 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/1.1.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/2.0.0...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [2.0.0](https://github.com/foxws/laravel-ddd/compare/1.1.0...2.0.0) - 2026-11-19
+
+This release requires PHP 8.5 or newer. PHP 8.4 is no longer supported, and PHP 8.6 is now tested in CI. Stay on the previous version if you still run PHP 8.4.
+
+<!-- Release notes generated using configuration in .github/release.yml at d0c8eda1161e6969b4315946e9798708d542141f -->
+### What's Changed
+
+#### Other Changes
+
+* Drop PHP 8.4 and add PHP 8.6 by @francoism90 in https://github.com/foxws/laravel-ddd/pull/16
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/1.1.0...2.0.0
 
 ## [1.1.0](https://github.com/foxws/laravel-ddd/compare/1.0.0...1.1.0) - 2026-11-14
 
