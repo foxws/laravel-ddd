@@ -5,7 +5,7 @@ metadata:
   group: foundations
   eyebrow: "DDD · Scaffolding · Artisan"
   desc: "Organize your Laravel app into Domain-Driven Design layers."
-  requires: "PHP ^8.4"
+  requires: "PHP ^8.5"
   laravel: "13.x"
   licence: MIT
 ---
