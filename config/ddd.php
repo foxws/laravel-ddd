@@ -59,8 +59,9 @@ return [
     | When enabled, Laravel's policy auto discovery also looks for policies
     | next to each layer's models, e.g. Domain\Users\Models\User resolves to
     | Domain\Users\Policies\UserPolicy, before Laravel's default guesses.
-    | Models outside a Models folder resolve to {Layer}\{PluralModel}\Policies,
-    | which only applies to Domain unless you list the layers yourself.
+    | After those, the app's models outside the layers, or at a layer's root,
+    | resolve to {Layer}\{PluralModel}\Policies, which only applies to Domain
+    | unless you list the layers yourself.
     |
     | Set it to true for every layer, false to disable it, or a list (or
     | comma-separated string) of layer keys, e.g. ['Domain', 'Modules'].
