@@ -12,6 +12,7 @@ use Fixtures\Modules\Users\Policies\UserPolicy as ModulesUserPolicy;
 use Fixtures\Policies\PostPolicy;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Stringable;
 
 beforeEach(function () {
     $fixtures = [
@@ -72,3 +73,49 @@ it('discovers pluralized policies in the listed layers', function () {
 
     expect(Gate::getPolicyFor(User::class))->toBeInstanceOf(ModulesUserPolicy::class);
 });
+
+it('prefers the policy of the model over the pluralized domain', function () {
+    defineFixture('App/Models/Order.php', 'namespace Fixtures\App\Models; class Order {}');
+    defineFixture('App/Policies/OrderPolicy.php', 'namespace Fixtures\App\Policies; class OrderPolicy {}');
+    defineFixture('Domain/Orders/Policies/OrderPolicy.php', 'namespace Fixtures\Domain\Orders\Policies; class OrderPolicy {}');
+
+    expect(Gate::getPolicyFor('Fixtures\App\Models\Order'))->toBeInstanceOf('Fixtures\App\Policies\OrderPolicy');
+});
+
+it('does not use the policy of another domain', function (string $path, string $namespace) {
+    defineFixture($path, "namespace {$namespace}; class User {}");
+
+    expect(Gate::getPolicyFor("{$namespace}\\User"))->toBeNull();
+})->with([
+    'model' => ['Domain/Admin/Models/User.php', 'Fixtures\Domain\Admin\Models'],
+    'class outside a Models folder' => ['Domain/Staff/User.php', 'Fixtures\Domain\Staff'],
+    'model in another layer' => ['Modules/Admin/Models/User.php', 'Fixtures\Modules\Admin\Models'],
+]);
+
+it('uses the policy of the same domain in another layer', function () {
+    defineFixture('Modules/Teams/Models/Team.php', 'namespace Fixtures\Modules\Teams\Models; class Team {}');
+    defineFixture('Domain/Teams/Policies/TeamPolicy.php', 'namespace Fixtures\Domain\Teams\Policies; class TeamPolicy {}');
+
+    expect(Gate::getPolicyFor('Fixtures\Modules\Teams\Models\Team'))->toBeInstanceOf('Fixtures\Domain\Teams\Policies\TeamPolicy');
+});
+
+it('discovers the pluralized policy of a model at the root of a layer', function () {
+    defineFixture('Domain/Ticket.php', 'namespace Fixtures\Domain; class Ticket {}');
+    defineFixture('Domain/Tickets/Policies/TicketPolicy.php', 'namespace Fixtures\Domain\Tickets\Policies; class TicketPolicy {}');
+
+    expect(Gate::getPolicyFor('Fixtures\Domain\Ticket'))->toBeInstanceOf('Fixtures\Domain\Tickets\Policies\TicketPolicy');
+});
+
+it('does not guess a domain policy for classes of installed packages', function () {
+    defineFixture('Domain/Stringables/Policies/StringablePolicy.php', 'namespace Fixtures\Domain\Stringables\Policies; class StringablePolicy {}');
+
+    expect(Gate::getPolicyFor(Stringable::class))->toBeNull();
+});
+
+function defineFixture(string $path, string $code): void
+{
+    File::ensureDirectoryExists(dirname(base_path("fixtures/{$path}")));
+    File::put(base_path("fixtures/{$path}"), "<?php\n\n{$code}\n");
+
+    require_once base_path("fixtures/{$path}");
+}

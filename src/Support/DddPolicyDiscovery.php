@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Foxws\Ddd\Support;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 class DddPolicyDiscovery
 {
     /**
-     * Guess the policy class names for the given model using each configured
-     * layer's namespace, followed by Laravel's default guesses.
+     * Guess the policy class names for the given model: next to it in its layer,
+     * then Laravel's default guesses, then the pluralized domain. Gate uses the
+     * first that exists, so a model's own policy always comes first.
      *
      * @return list<string>
      */
@@ -25,11 +28,12 @@ class DddPolicyDiscovery
         return array_values(array_unique([
             ...static::layerPolicyNames($class, $layers),
             ...static::defaultPolicyNames($class),
+            ...static::pluralPolicyNames($class, $layers),
         ]));
     }
 
     /**
-     * Guess the policy class names using the enabled layers, e.g.
+     * Guess the policy next to the model in the enabled layers, e.g.
      * Domain\Users\Models\User resolves to Domain\Users\Policies\UserPolicy.
      *
      * @param  array<string, array{namespace?: string, path: string}>  $layers
@@ -63,14 +67,79 @@ class DddPolicyDiscovery
             }
         }
 
+        return $names;
+    }
+
+    /**
+     * Guess the policy in the pluralized domain, e.g. App\Models\User resolves
+     * to Domain\Users\Policies\UserPolicy.
+     *
+     * @param  array<string, array{namespace?: string, path: string}>  $layers
+     * @return list<string>
+     */
+    protected static function pluralPolicyNames(string $class, array $layers): array
+    {
+        $policies = trim(DddSubstitutions::get()['policy'] ?? 'Policies', '\\');
+        $domain = Str::pluralStudly(class_basename($class));
+
+        if ($policies === '' || ! static::canBelongToDomain($class, $domain)) {
+            return [];
+        }
+
+        $policy = class_basename($class).'Policy';
         $pluralLayers = DddDiscovery::enabledLayerKeys('discover_policies') ?? ['Domain'];
+        $names = [];
 
         foreach (array_intersect_key($layers, array_flip($pluralLayers)) as $key => $layer) {
             $names[] = Path::toNamespace($layer['namespace'] ?? $key)
-                .Str::pluralStudly(class_basename($class)).'\\'.$policies.'\\'.$policy;
+                .$domain.'\\'.$policies.'\\'.$policy;
         }
 
         return $names;
+    }
+
+    /**
+     * A class with the same name in another domain, or in an installed package,
+     * is a different model, so it mustn't get this domain's policy.
+     */
+    protected static function canBelongToDomain(string $class, string $domain): bool
+    {
+        /** @var array<string, array{namespace?: string, path: string}> $layers */
+        $layers = Config::array('ddd.layers', []);
+
+        foreach ($layers as $key => $layer) {
+            $namespace = Path::toNamespace($layer['namespace'] ?? $key);
+
+            if (! str_starts_with($class, $namespace)) {
+                continue;
+            }
+
+            $segments = explode('\\', Str::after($class, $namespace));
+
+            return count($segments) === 1 || $segments[0] === $domain;
+        }
+
+        return static::isApplicationClass($class);
+    }
+
+    /**
+     * Whether the class is declared in the application, outside its vendor folder.
+     */
+    protected static function isApplicationClass(string $class): bool
+    {
+        if (! class_exists($class)) {
+            return false;
+        }
+
+        $file = (new ReflectionClass($class))->getFileName();
+        $basePath = realpath(base_path());
+
+        if ($file === false || $basePath === false) {
+            return false;
+        }
+
+        return str_starts_with($file, $basePath.DIRECTORY_SEPARATOR)
+            && ! str_starts_with($file, $basePath.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR);
     }
 
     /**
