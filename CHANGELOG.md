@@ -1,8 +1,24 @@
 # Release Notes
 
-## [Unreleased](https://github.com/foxws/laravel-ddd/compare/2.0.0...HEAD)
+## [Unreleased](https://github.com/foxws/laravel-ddd/compare/2.0.1...HEAD)
 
 Split out of [foxws/laravel-essentials](https://github.com/foxws/laravel-essentials): the `ddd:install`/`ddd:make*` commands, layer configuration, and stubs now live here.
+
+## [2.0.1](https://github.com/foxws/laravel-ddd/compare/2.0.0...2.0.1) - 2026-11-23
+
+- A model's own policy now comes before the pluralized guess, and the pluralized guess is no longer made for classes of installed packages.
+
+**Upgrading:** a model that relied on another domain's policy through the pluralized guess now has none, so its checks are denied. Register that policy with `Gate::policy()`.
+
+<!-- Release notes generated using configuration in .github/release.yml at 83f434d097df9e37e76b4474d99a836034b9a3ab -->
+### What's Changed
+
+#### Other Changes
+
+* Harden the workflows by @francoism90 in https://github.com/foxws/laravel-ddd/pull/17
+* Prefer a model's own policy over the pluralized guess by @francoism90 in https://github.com/foxws/laravel-ddd/pull/18
+
+**Full Changelog**: https://github.com/foxws/laravel-ddd/compare/2.0.0...2.0.1
 
 ## [2.0.0](https://github.com/foxws/laravel-ddd/compare/1.1.0...2.0.0) - 2026-11-19
 
