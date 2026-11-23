@@ -48,6 +48,14 @@ Publish `config/ddd.php` (`--tag=ddd-config`) to add, rename, or remove layers, 
 
 Event listeners, policies and console commands in any layer are auto-discovered (`discover_events`, `discover_policies`, `discover_commands`): `Domain\Users\Models\User` resolves to `Domain\Users\Policies\UserPolicy` without a custom `Gate::guessPolicyNamesUsing()` callback, listeners in `src/Domain/Users/Listeners` are found without listing the folder in `withEvents()`, and commands in `src/Domain/Users/Commands` are registered without `withCommands()`.
 
+Policy discovery tries, in order, and uses the first policy that exists:
+
+1. Next to the model in its layer: `Domain\Billing\Models\Invoice` uses `Domain\Billing\Policies\InvoicePolicy`.
+2. Laravel's own guesses, so `App\Models\Order` keeps `App\Policies\OrderPolicy`.
+3. The pluralized domain: `App\Models\User` uses `Domain\Users\Policies\UserPolicy`. This is only guessed for the app's models outside the layers, models at a layer's root (`Domain\Ticket`), and models of that same domain in another layer (`Modules\Teams\Models\Team` uses `Domain\Teams\Policies\TeamPolicy`).
+
+A model of another domain, such as `Domain\Admin\Models\User`, or a class of an installed package never gets a domain's policy by name. Register its policy with `Gate::policy()` or `#[UsePolicy]`, or it has none and every check is denied.
+
 ### 3. Generate classes into a layer
 
 ```bash
@@ -115,6 +123,7 @@ Read before executing:
 
 - Do not hand-roll `app/` subfolder conventions once this package is installed — use `ddd:make` (or its layer-specific shortcuts) so generated classes land in the configured namespace and subfolder.
 - Do not use this package for the opinionated Laravel defaults (`Model::shouldBeStrict()`, `URL::forceHttps()`, etc.) — that's the separate `foxws/laravel-essentials` package.
+- Do not rely on a model borrowing another domain's policy by name: register it with `Gate::policy()` or `#[UsePolicy]`.
 - Do not document package internals here; keep the skill focused on adoption in Laravel apps.
 
 ## Enums with labels
